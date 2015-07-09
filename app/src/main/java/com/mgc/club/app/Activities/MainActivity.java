@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TabHost;
+import android.widget.TabWidget;
+import android.widget.TextView;
 import com.mgc.club.app.Adapters.SectionsPager_Adapter;
 import com.mgc.club.app.Fragments.Certificates_Fragment;
 import com.mgc.club.app.Fragments.Events_Fragment;
@@ -61,18 +63,53 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         tabHost = (TabHost) findViewById(android.R.id.tabhost);
         tabHost.setup();
         TabInfo tabInfo = null;
+
+//        LinearLayout linearLayout = new LinearLayout(getApplicationContext());
+
+//        View view = new View(getApplicationContext());
+
+//        ImageView imageView = new ImageView(getApplicationContext());
+//        imageView.setImageBitmap(((BitmapDrawable) getResources().getDrawable(R.drawable.logo_mgc)).getBitmap());
+//        linearLayout.addView(imageView);
+
+
+//        TextView title =new TextView(getApplicationContext());
+//        title.setText("Назад");
+//        title.setGravity(Gravity.LEFT | Gravity.CENTER_VERTICAL);
+//        linearLayout.addView(title);
+
+//        TabHost.TabSpec photospec = tabHost.newTabSpec("En Vivo");
+//        photospec.setIndicator(linearLayout);
+
+//        TabHost.TabSpec photospec = tabHost.newTabSpec("En Vivo");
+//        photospec.setIndicator("xx", getResources().getDrawable(R.drawable.logo_mgc));
+//
+//        MainActivity.AddTab(this,this.tabHost,photospec, tabInfo=new TabInfo("En Vivo",Places_Fragment.class,args));
+//        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+//        tabHost.addTab(photospec);
+
         MainActivity.AddTab(this, this.tabHost, this.tabHost.newTabSpec("Tab1").setIndicator("Сертификаты"), (tabInfo = new TabInfo("Tab1", Certificates_Fragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
         MainActivity.AddTab(this, this.tabHost, this.tabHost.newTabSpec("Tab2").setIndicator("Места"), (tabInfo = new TabInfo("Tab2", Places_Fragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
-        MainActivity.AddTab(this, this.tabHost, this.tabHost.newTabSpec("Tab3").setIndicator("Мероприятия"), (tabInfo = new TabInfo("Tab3", Feed_Fragment.class, args)));
-        this.mapTabInfo.put(tabInfo.tag, tabInfo);
+//        MainActivity.AddTab(this, this.tabHost, this.tabHost.newTabSpec("Tab3").setIndicator("Мероприятия"), (tabInfo = new TabInfo("Tab3", Feed_Fragment.class, args)));
+//        this.mapTabInfo.put(tabInfo.tag, tabInfo);
         MainActivity.AddTab(this, this.tabHost, this.tabHost.newTabSpec("Tab4").setIndicator("Новости"), (tabInfo = new TabInfo("Tab4", Events_Fragment.class, args)));
         this.mapTabInfo.put(tabInfo.tag, tabInfo);
         // Default to first tab
         //this.onTabChanged("Tab1");
         //
         tabHost.setOnTabChangedListener(this);
+
+
+        TabWidget tabWidget = tabHost.getTabWidget();
+        for (int i = 0; i < tabWidget.getChildCount(); i++) {
+            ViewGroup v = (ViewGroup)tabWidget.getChildAt(i);
+            TextView tv = (TextView) v.getChildAt(1);
+            if(tv!=null) {
+                tv.setTextSize(9);
+            }
+        }
     }
 
     ViewPager mViewPager;
