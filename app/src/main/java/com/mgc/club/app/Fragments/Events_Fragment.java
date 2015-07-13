@@ -1,5 +1,6 @@
 package com.mgc.club.app.Fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.mgc.club.app.Activities.Details.Events_Details_Activity;
 import com.mgc.club.app.Adapters.Events_Adapter;
 import com.mgc.club.app.Application.AppController;
 import com.mgc.club.app.Model.Events;
@@ -21,9 +23,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by savva on 07.07.2015.
@@ -62,20 +62,27 @@ public class Events_Fragment extends Fragment {
                                     event.setName(obj.getString("name"));
                                     event.setText(obj.getString("text"));
 
-                                    DateFormat format = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ss.SSS");
+                                    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
                                     Date date = null;
                                     try {
                                         date = format.parse(obj.getString("start"));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    event.setStart(date);
+                                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+                                    Calendar calendar = new GregorianCalendar();
+                                    calendar.setTime(date);
+                                    String start ="Начало " + calendar.DAY_OF_MONTH + " " +AppController.getInstance().month[calendar.get(Calendar.MONTH)]+  " "+simpleDateFormat.format(date);
+
+                                    event.setStart(start);
                                     try {
                                         date = format.parse(obj.getString("finish"));
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
-                                    event.setFinish(date);
+
+                                    String finish = "Конец "+ calendar.DAY_OF_MONTH + " " +AppController.getInstance().month[calendar.get(Calendar.MONTH)]+  " "+simpleDateFormat.format(date);
+                                    event.setFinish(finish);
                                     event.setEventcover(obj.getString("eventcover"));
 
                                     // Genre is json array
@@ -112,7 +119,9 @@ public class Events_Fragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String s = "";
+                Intent intent = new Intent(getActivity(), Events_Details_Activity.class);
+                intent.putExtra("object", events.get(position));
+                startActivity(intent);
             }
         });
 

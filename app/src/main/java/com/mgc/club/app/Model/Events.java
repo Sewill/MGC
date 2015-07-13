@@ -1,7 +1,6 @@
 package com.mgc.club.app.Model;
 
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  * Created by savva on 07.07.2015.
@@ -10,8 +9,8 @@ public class Events implements Serializable {
     private int id;
     private String name;
     private String text;
-    private Date start;
-    private Date finish;
+    private String start;
+    private String finish;
     private String eventcover;
 
 
@@ -39,19 +38,19 @@ public class Events implements Serializable {
         this.text = text;
     }
 
-    public Date getStart() {
+    public String getStart() {
         return start;
     }
 
-    public void setStart(Date start) {
+    public void setStart(String start) {
         this.start = start;
     }
 
-    public Date getFinish() {
+    public String getFinish() {
         return finish;
     }
 
-    public void setFinish(Date finish) {
+    public void setFinish(String finish) {
         this.finish = finish;
     }
 

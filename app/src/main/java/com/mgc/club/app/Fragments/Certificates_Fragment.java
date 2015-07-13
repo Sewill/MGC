@@ -11,7 +11,7 @@ import android.widget.ListView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
-import com.mgc.club.app.Activities.Details.Certificates_Derails_Activity;
+import com.mgc.club.app.Activities.Details.Certificates_Details_Activity;
 import com.mgc.club.app.Adapters.Certificates_Adapter;
 import com.mgc.club.app.Application.AppController;
 import com.mgc.club.app.Model.Certificates;
@@ -98,7 +98,7 @@ public class Certificates_Fragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(getActivity(), Certificates_Derails_Activity.class);
+                Intent intent = new Intent(getActivity(), Certificates_Details_Activity.class);
                 intent.putExtra("object", certificatesList.get(position));
                 startActivity(intent);
             }

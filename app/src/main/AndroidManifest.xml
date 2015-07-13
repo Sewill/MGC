@@ -17,7 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.Details.Certificates_Derails_Activity"/>
+        <activity android:name=".Activities.Details.Certificates_Details_Activity"/>
+        <activity android:name=".Activities.Details.Events_Details_Activity"/>
     </application>
 
 </manifest>

@@ -74,7 +74,7 @@ public class Events_Adapter extends BaseAdapter {
         title.setText(m.getName());
 
         // rating
-        rating.setText(m.getText());
+        rating.setText(m.getStart()+"\n"+m.getFinish());
 
 //        // genre
 //        String genreStr = "";

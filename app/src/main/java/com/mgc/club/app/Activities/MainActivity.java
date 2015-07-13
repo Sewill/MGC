@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.mgc.club.app.Adapters.SectionsPager_Adapter;
 import com.mgc.club.app.Fragments.Certificates_Fragment;
 import com.mgc.club.app.Fragments.Events_Fragment;
-import com.mgc.club.app.Fragments.Feed_Fragment;
 import com.mgc.club.app.Fragments.Places_Fragment;
 import com.mgc.club.app.R;
 
@@ -53,7 +52,6 @@ public class MainActivity extends FragmentActivity implements TabHost.OnTabChang
         List<Fragment> fragments = new Vector<Fragment>();
         fragments.add(Fragment.instantiate(this, Certificates_Fragment.class.getName()));
         fragments.add(Fragment.instantiate(this, Places_Fragment.class.getName()));
-        fragments.add(Fragment.instantiate(this, Feed_Fragment.class.getName()));
         fragments.add(Fragment.instantiate(this, Events_Fragment.class.getName()));
         this.new_adapter = new SectionsPager_Adapter(super.getSupportFragmentManager(), fragments);
 

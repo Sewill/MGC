@@ -25,29 +25,29 @@ import org.json.JSONObject;
 /**
  * Created by savva on 07.07.2015.
  */
-public class Certificates_Derails_Activity extends ActionBarActivity {
+public class Certificates_Details_Activity extends ActionBarActivity {
     Certificates certificates = null;
     TextView note = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.certificates_details);
+        setContentView(R.layout.details);
 
         certificates = (Certificates) getIntent().getSerializableExtra("object");
 
         ImageLoader imageLoader = AppController.getInstance().getImageLoader();
 
-        NetworkImageView thumbNail = (NetworkImageView) findViewById(R.id.certificates_details_thumbnail);
+        NetworkImageView thumbNail = (NetworkImageView) findViewById(R.id.details_thumbnail);
         thumbNail.setDefaultImageResId(R.drawable.icon_loading);
         thumbNail.setImageUrl(certificates.getCover_url(), imageLoader);
 
-        TextView theme = (TextView) findViewById(R.id.certificates_details_theme);
+        TextView theme = (TextView) findViewById(R.id.details_theme);
 
 
         theme.setText(certificates.getName());
 
-        note = (TextView) findViewById(R.id.certificates_details_note);
+        note = (TextView) findViewById(R.id.details_note);
 
         if (certificates.getDesc() == null) {
 
