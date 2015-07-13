@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.mgc.club.app.Activities.MainActivity;
 import com.mgc.club.app.Application.AppController;
 import com.mgc.club.app.Model.Certificates;
 import com.mgc.club.app.Model.Places;
@@ -68,7 +67,9 @@ public class Places_Adapter extends BaseAdapter {
         Places m = placeses.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getLogo_url(), imageLoader);
+        if(m.getLogo_url()!=null&&!m.getLogo_url().equals("null")) {
+            thumbNail.setImageUrl(m.getLogo_url(), imageLoader);
+        }
         // title
         title.setText(m.getName());
 

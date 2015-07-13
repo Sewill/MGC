@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.mgc.club.app.Activities.MainActivity;
 import com.mgc.club.app.Application.AppController;
 import com.mgc.club.app.Model.Certificates;
 import com.mgc.club.app.R;
@@ -68,7 +67,9 @@ public class Certificates_Adapter extends BaseAdapter {
         Certificates m = certificates.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getCover_url(), imageLoader);
+        if(m.getCover_url()!=null&&!m.getCover_url().equals("null")) {
+            thumbNail.setImageUrl(m.getCover_url(), imageLoader);
+        }
         // title
         title.setText(m.getName());
 

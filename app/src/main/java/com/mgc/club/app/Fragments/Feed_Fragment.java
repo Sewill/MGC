@@ -41,23 +41,24 @@ public class Feed_Fragment extends Fragment {
         listView.setAdapter(adapter);
 
         // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+        if (url != null&&!url.equals("null")) {
+            JsonArrayRequest movieReq = new JsonArrayRequest(url,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
 //                        Log.d(TAG, response.toString());
 
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
+                            // Parsing json
+                            for (int i = 0; i < response.length(); i++) {
+                                try {
 
-                                JSONObject obj = response.getJSONObject(i);
-                                Feed feed = new Feed();
-                                feed.setId((Integer) obj.get("id"));
-                                feed.setName(obj.getString("name"));
-                                feed.setCover(obj.getString("cover"));
+                                    JSONObject obj = response.getJSONObject(i);
+                                    Feed feed = new Feed();
+                                    feed.setId((Integer) obj.get("id"));
+                                    feed.setName(obj.getString("name"));
+                                    feed.setCover(obj.getString("cover"));
 
-                                // Genre is json array
+                                    // Genre is json array
 //                                JSONArray genreArry = obj.getJSONArray("genre");
 //                                ArrayList<String> genre = new ArrayList<String>();
 //                                for (int j = 0; j < genreArry.length(); j++) {
@@ -65,29 +66,29 @@ public class Feed_Fragment extends Fragment {
 //                                }
 //                                certificates.setGenre(genre);
 
-                                // adding movie to movies array
-                                feeds.add(feed);
+                                    // adding movie to movies array
+                                    feeds.add(feed);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
 
+                            // notifying list adapter about data changes
+                            // so that it renders the list view with updated data
+                            adapter.notifyDataSetChanged();
                         }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 //                VolleyLog.d(TAG, "Error: " + error.getMessage());
-            }
-        });
+                }
+            });
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);
-
+            // Adding request to request queue
+            AppController.getInstance().addToRequestQueue(movieReq);
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

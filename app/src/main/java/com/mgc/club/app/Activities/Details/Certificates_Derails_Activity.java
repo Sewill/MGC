@@ -5,7 +5,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.text.Html;
 import android.text.Spanned;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -52,29 +51,34 @@ public class Certificates_Derails_Activity extends ActionBarActivity {
 
         if (certificates.getDesc() == null) {
 
-            RequestQueue queue = Volley.newRequestQueue(this);
+            try {
+                RequestQueue queue = Volley.newRequestQueue(this);
+                if(certificates.getUrl()!=null) {
+                    JsonObjectRequest movieReq = new JsonObjectRequest(Request.Method.GET, certificates.getUrl(), null,
+                            new Response.Listener<JSONObject>() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+                                    try {
+                                        Spanned spannedText = Html.fromHtml("<meta charset=\"utf-8\">" + response.getString("desc"));
+                                        certificates.setDesc(spannedText.toString());
+                                        note.setText(certificates.getDesc());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
 
-            JsonObjectRequest movieReq = new JsonObjectRequest(Request.Method.GET, certificates.getUrl(), null,
-                    new Response.Listener<JSONObject>() {
+                                }
+                            }, new Response.ErrorListener() {
                         @Override
-                        public void onResponse(JSONObject response) {
-                            try {
-                                Spanned spannedText = Html.fromHtml("<meta charset=\"utf-8\">" + response.getString("desc"));
-                                certificates.setDesc(spannedText.toString());
-                                note.setText(certificates.getDesc());
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-
+                        public void onErrorResponse(VolleyError error) {
+                            //                VolleyLog.d(TAG, "Error: " + error.getMessage());
                         }
-                    }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-//                VolleyLog.d(TAG, "Error: " + error.getMessage());
-                }
-            });
+                    });
 //            AppController.getInstance().addToRequestQueue(movieReq);
-            queue.add(movieReq);
+                    queue.add(movieReq);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         } else {
             note.setText(certificates.getDesc());
         }

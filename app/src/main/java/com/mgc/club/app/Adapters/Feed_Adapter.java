@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.mgc.club.app.Activities.MainActivity;
 import com.mgc.club.app.Application.AppController;
 import com.mgc.club.app.Model.Certificates;
 import com.mgc.club.app.Model.Feed;
@@ -68,7 +67,10 @@ public class Feed_Adapter extends BaseAdapter {
         Feed m = feeds.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getCover(), imageLoader);
+
+        if(m.getCover()!=null&&!m.getCover().equals("null")) {
+            thumbNail.setImageUrl(m.getCover(), imageLoader);
+        }
         // title
         title.setText(m.getName());
 

@@ -45,39 +45,40 @@ public class Events_Fragment extends Fragment {
         listView.setAdapter(adapter);
 
         // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
+        if(url!=null&&!url.equals("null")) {
+            JsonArrayRequest movieReq = new JsonArrayRequest(url,
+                    new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
 //                        Log.d(TAG, response.toString());
 
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
-
-                                JSONObject obj = response.getJSONObject(i);
-                                Events event = new Events();
-                                event.setId((Integer) obj.get("id"));
-                                event.setName(obj.getString("name"));
-                                event.setText(obj.getString("text"));
-
-                                DateFormat format = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ss.SSS");
-                                Date date =null;
+                            // Parsing json
+                            for (int i = 0; i < response.length(); i++) {
                                 try {
-                                    date = format.parse(obj.getString("start"));
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                event.setStart(date);
-                                try {
-                                    date = format.parse(obj.getString("finish"));
-                                } catch (ParseException e) {
-                                    e.printStackTrace();
-                                }
-                                event.setFinish(date);
-                                event.setEventcover(obj.getString("eventcover"));
 
-                                // Genre is json array
+                                    JSONObject obj = response.getJSONObject(i);
+                                    Events event = new Events();
+                                    event.setId((Integer) obj.get("id"));
+                                    event.setName(obj.getString("name"));
+                                    event.setText(obj.getString("text"));
+
+                                    DateFormat format = new SimpleDateFormat("yyyy-mm-dd'T'HH:mm:ss.SSS");
+                                    Date date = null;
+                                    try {
+                                        date = format.parse(obj.getString("start"));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    event.setStart(date);
+                                    try {
+                                        date = format.parse(obj.getString("finish"));
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    }
+                                    event.setFinish(date);
+                                    event.setEventcover(obj.getString("eventcover"));
+
+                                    // Genre is json array
 //                                JSONArray genreArry = obj.getJSONArray("genre");
 //                                ArrayList<String> genre = new ArrayList<String>();
 //                                for (int j = 0; j < genreArry.length(); j++) {
@@ -85,29 +86,29 @@ public class Events_Fragment extends Fragment {
 //                                }
 //                                certificates.setGenre(genre);
 
-                                // adding movie to movies array
-                                events.add(event);
+                                    // adding movie to movies array
+                                    events.add(event);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+
                             }
 
+                            // notifying list adapter about data changes
+                            // so that it renders the list view with updated data
+                            adapter.notifyDataSetChanged();
                         }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
-                    }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
 //                VolleyLog.d(TAG, "Error: " + error.getMessage());
-            }
-        });
+                }
+            });
 
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);
-
+            // Adding request to request queue
+            AppController.getInstance().addToRequestQueue(movieReq);
+        }
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

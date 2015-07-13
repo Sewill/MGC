@@ -41,54 +41,59 @@ public class Certificates_Fragment extends Fragment {
         adapter = new Certificates_Adapter(getActivity(), certificatesList);
         listView.setAdapter(adapter);
         // Creating volley request obj
-        JsonArrayRequest movieReq = new JsonArrayRequest(url,
-                new Response.Listener<JSONArray>() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-//                        Log.d(TAG, response.toString());
+        try {
+            if (url != null&&!url.equals("null")) {
+                JsonArrayRequest movieReq = new JsonArrayRequest(url,
+                        new Response.Listener<JSONArray>() {
+                            @Override
+                            public void onResponse(JSONArray response) {
+                                //                        Log.d(TAG, response.toString());
 
-                        // Parsing json
-                        for (int i = 0; i < response.length(); i++) {
-                            try {
+                                // Parsing json
+                                for (int i = 0; i < response.length(); i++) {
+                                    try {
 
-                                JSONObject obj = response.getJSONObject(i);
-                                Certificates certificates = new Certificates();
-                                certificates.setId((Integer) obj.get("id"));
-                                certificates.setName(obj.getString("name"));
-                                certificates.setBonus_price((Integer) obj.get("bonus_price"));
-                                certificates.setCover_url(obj.getString("cover_url"));
-                                certificates.setUrl(obj.getString("url"));
+                                        JSONObject obj = response.getJSONObject(i);
+                                        Certificates certificates = new Certificates();
+                                        certificates.setId((Integer) obj.get("id"));
+                                        certificates.setName(obj.getString("name"));
+                                        certificates.setBonus_price((Integer) obj.get("bonus_price"));
+                                        certificates.setCover_url(obj.getString("cover_url"));
+                                        certificates.setUrl(obj.getString("url"));
 
-                                // Genre is json array
-//                                JSONArray genreArry = obj.getJSONArray("genre");
-//                                ArrayList<String> genre = new ArrayList<String>();
-//                                for (int j = 0; j < genreArry.length(); j++) {
-//                                    genre.add((String) genreArry.get(j));
-//                                }
-//                                certificates.setGenre(genre);
+                                        // Genre is json array
+                                        //                                JSONArray genreArry = obj.getJSONArray("genre");
+                                        //                                ArrayList<String> genre = new ArrayList<String>();
+                                        //                                for (int j = 0; j < genreArry.length(); j++) {
+                                        //                                    genre.add((String) genreArry.get(j));
+                                        //                                }
+                                        //                                certificates.setGenre(genre);
 
-                                // adding movie to movies array
-                                certificatesList.add(certificates);
+                                        // adding movie to movies array
+                                        certificatesList.add(certificates);
 
-                            } catch (JSONException e) {
-                                e.printStackTrace();
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                }
+
+                                // notifying list adapter about data changes
+                                // so that it renders the list view with updated data
+                                adapter.notifyDataSetChanged();
                             }
-
-                        }
-
-                        // notifying list adapter about data changes
-                        // so that it renders the list view with updated data
-                        adapter.notifyDataSetChanged();
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //                VolleyLog.d(TAG, "Error: " + error.getMessage());
                     }
-                }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-//                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                });
+                // Adding request to request queue
+                AppController.getInstance().addToRequestQueue(movieReq);
             }
-        });
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(movieReq);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

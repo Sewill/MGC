@@ -9,7 +9,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
-import com.mgc.club.app.Activities.MainActivity;
 import com.mgc.club.app.Application.AppController;
 import com.mgc.club.app.Model.Certificates;
 import com.mgc.club.app.Model.Events;
@@ -68,7 +67,9 @@ public class Events_Adapter extends BaseAdapter {
         Events m = events.get(position);
 
         // thumbnail image
-        thumbNail.setImageUrl(m.getEventcover(), imageLoader);
+        if(m.getEventcover()!=null&&!m.getEventcover().equals("null")) {
+            thumbNail.setImageUrl(m.getEventcover(), imageLoader);
+        }
         // title
         title.setText(m.getName());
 
